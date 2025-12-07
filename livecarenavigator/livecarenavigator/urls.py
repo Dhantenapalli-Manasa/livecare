@@ -23,6 +23,6 @@ from livecareapp.views import home,login
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('home/',home),
-    path('location/',location,name='location')
+    path('location/',location,name='location'),
     path('login/', login, name='login')
 ]
