@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LiveCare Navigator - Healthcare at Your Fingertips</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .profile-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+        .login-btn {
+            background: white;
+            color: #667eea;
+            padding: 0.5rem 1.5rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        .hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-align: center;
+            padding: 4rem 2rem;
+        }
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+        }
+        .cta-button {
+            background: white;
+            color: #667eea;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        .services {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            padding: 3rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .service-card {
+            background: white;
+            border-radius: 10px;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        .service-card:hover {
+            transform: translateY(-5px);
+        }
+        .service-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        .service-card h3 {
+            margin-bottom: 1rem;
+            color: #667eea;
+        }
+        .service-btn {
+            background: #667eea;
+            color: white;
+            padding: 0.7rem 1.5rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 1rem;
+        }
+        footer {
+            background: #333;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+        }
+        footer p {
+            margin: 0.5rem 0;
+        }
+        .footer-links {
+            margin-top: 1rem;
+        }
+        .footer-links a {
+            color: #667eea;
+            margin: 0 1rem;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="logo">🏥 LiveCare Navigator</div>
+        <div class="user-profile">
+            <span>Welcome, User</span>
+            <div class="profile-avatar">👤</div>
+            <button class="login-btn">Login</button>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <h1>Your Health, Our Priority</h1>
+        <p>Find hospitals, specialists, book appointments, and get AI-powered health assistance</p>
+        <button class="cta-button">Get Started</button>
+    </section>
+
+    <!-- Services Section -->
+    <section class="services">
+        <!-- Location Service -->
+        <div class="service-card">
+            <div class="service-icon">📍</div>
+            <h3>Your Location</h3>
+            <p>Share your location to find nearby healthcare facilities</p>
+            <button class="service-btn">Enable Location</button>
+        </div>
+
+        <!-- Hospital Availability -->
+        <div class="service-card">
+            <div class="service-icon">🏥</div>
+            <h3>Hospital Availability</h3>
+            <p>Check real-time bed availability and hospital details</p>
+            <button class="service-btn">Find Hospitals</button>
+        </div>
+
+        <!-- Specialist Available -->
+        <div class="service-card">
+            <div class="service-icon">👨‍⚕️</div>
+            <h3>Specialists</h3>
+            <p>Find and connect with available medical specialists</p>
+            <button class="service-btn">Browse Specialists</button>
+        </div>
+
+        <!-- Emergency -->
+        <div class="service-card">
+            <div class="service-icon">🚨</div>
+            <h3>Emergency</h3>
+            <p>Quick access to emergency services and ambulance</p>
+            <button class="service-btn">Call Emergency</button>
+        </div>
+
+        <!-- Appointment Booking -->
+        <div class="service-card">
+            <div class="service-icon">📅</div>
+            <h3>Book Appointment</h3>
+            <p>Schedule appointments with doctors and specialists</p>
+            <button class="service-btn">Book Now</button>
+        </div>
+
+        <!-- Medical Records -->
+        <div class="service-card">
+            <div class="service-icon">📋</div>
+            <h3>Medical Records</h3>
+            <p>Access and manage your medical history securely</p>
+            <button class="service-btn">View Records</button>
+        </div>
+
+        <!-- AI Assistant -->
+        <div class="service-card">
+            <div class="service-icon">🤖</div>
+            <h3>AI Assistant</h3>
+            <p>Get instant health advice from our AI-powered assistant</p>
+            <button class="service-btn">Chat with AI</button>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 LiveCare Navigator. All rights reserved.</p>
+        <div class="footer-links">
+            <a href="#privacy">Privacy Policy</a>
+            <a href="#terms">Terms of Service</a>
+            <a href="#contact">Contact Us</a>
+            <a href="#about">About Us</a>
+        </div>
+        <p>24/7 Customer Support: 1-800-LIVECARE</p>
+    </footer>
+</body>
+</html>
