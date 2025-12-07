@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hospital Finder - LiveCare Navigator</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+        }
+        
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        
+        .search-section {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            margin-bottom: 30px;
+        }
+        
+        .search-controls {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .search-input-group {
+            display: flex;
+            gap: 10px;
+            flex: 1;
+            min-width: 250px;
+            justify-content: center;
+        }
+        
+        input[type="text"] {
+            padding: 12px 15px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 1em;
+            width: 250px;
+            transition: border-color 0.3s;
+        }
+        
+        input[type="text"]:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        
+        button {
+            padding: 12px 25px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: background 0.3s;
+        }
+        
+        button:hover {
+            background: #764ba2;
+        }
+        
+        .hospitals-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+        
+        .hospital-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            transition: transform 0.3s;
+        }
+        
+        .hospital-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .hospital-header {
+            background: #667eea;
+            color: white;
+            padding: 20px;
+        }
+        
+        .hospital-name {
+            font-size: 1.5em;
+            margin-bottom: 5px;
+        }
+        
+        .distance {
+            font-size: 0.9em;
+            opacity: 0.9;
+        }
+        
+        .hospital-body {
+            padding: 20px;
+        }
+        
+        .info-item {
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .info-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+        }
+        
+        .label {
+            font-weight: bold;
+            color: #333;
+            font-size: 0.9em;
+            text-transform: uppercase;
+        }
+        
+        .value {
+            color: #666;
+            margin-top: 5px;
+        }
+        
+        .bed-availability {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin: 15px 0;
+        }
+        
+        .bed-item {
+            background: #f5f5f5;
+            padding: 10px;
+            border-radius: 5px;
+            text-align: center;
+        }
+        
+        .bed-count {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #667eea;
+        }
+        
+        .bed-type {
+            font-size: 0.85em;
+            color: #666;
+            margin-top: 5px;
+        }
+        
+        .status-available {
+            color: #27ae60;
+            font-weight: bold;
+        }
+        
+        .status-low {
+            color: #f39c12;
+            font-weight: bold;
+        }
+        
+        .status-full {
+            color: #e74c3c;
+            font-weight: bold;
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        
+        .action-buttons button {
+            flex: 1;
+            padding: 10px;
+            font-size: 0.9em;
+        }
+        
+        .btn-details {
+            background: #667eea;
+        }
+        
+        .btn-admit {
+            background: #27ae60;
+        }
+        
+        .loading {
+            text-align: center;
+            color: white;
+            font-size: 1.2em;
+        }
+        
+        .no-results {
+            text-align: center;
+            color: white;
+            padding: 40px;
+            font-size: 1.1em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🏥 Hospital Finder</h1>
+            <p>Find nearest hospitals with real-time bed availability</p>
+        </header>
+        
+        <div class="search-section">
+            <div class="search-controls">
+                <div class="search-input-group">
+                    <input type="text" id="searchCity" placeholder="Enter city or area name...">
+                    <button onclick="searchByLocation()">🔍 Search</button>
+                </div>
+                <button onclick="getCurrentLocation()">📍 Use My Location</button>
+            </div>
+        </div>
+        
+        <div id="hospitalsContainer" class="hospitals-grid">
+            <div class="loading">Enter location or use current location to find hospitals...</div>
+        </div>
+    </div>
+    
+    <script>
+        // Mock hospital database with coordinates
+        const allHospitals = [
+            {
+                id: 1,
+                name: "City Medical Center",
+                city: "New York",
+                lat: 40.7128,
+                lng: -74.0060,
+                phone: "+1-800-123-4567",
+                address: "123 Health Street, Medical City",
+                beds: { general: 12, icu: 3, critical: 1 },
+                doctors: 45,
+                rating: 4.8,
+                services: ["Emergency", "ICU", "Surgery", "Cardiology"]
+            },
+            {
+                id: 2,
+                name: "St. Mary's Hospital",
+                city: "New York",
+                lat: 40.7580,
+                lng: -73.9855,
+                phone: "+1-800-987-6543",
+                address: "456 Care Avenue, Wellness Town",
+                beds: { general: 8, icu: 2, critical: 0 },
+                doctors: 38,
+                rating: 4.6,
+                services: ["Emergency", "Pediatrics", "Gynecology", "Orthopedics"]
+            },
+            {
+                id: 3,
+                name: "General Hospital",
+                city: "Brooklyn",
+                lat: 40.6782,
+                lng: -73.9442,
+                phone: "+1-800-555-0123",
+                address: "789 Recovery Road, Health District",
+                beds: { general: 20, icu: 5, critical: 2 },
+                doctors: 52,
+                rating: 4.7,
+                services: ["Emergency", "ICU", "Trauma", "Neurology"]
+            },
+            {
+                id: 4,
+                name: "Queens Medical Center",
+                city: "Queens",
+                lat: 40.7282,
+                lng: -73.7949,
+                phone: "+1-800-444-5678",
+                address: "321 Wellness Blvd, Queens",
+                beds: { general: 15, icu: 4, critical: 1 },
+                doctors: 42,
+                rating: 4.5,
+                services: ["Emergency", "Maternity", "Cardiology", "Surgery"]
+            }
+        ];
+        
+        function calculateDistance(lat1, lng1, lat2, lng2) {
+            const R = 6371; // Earth's radius in km
+            const dLat = (lat2 - lat1) * Math.PI / 180;
+            const dLng = (lng2 - lng1) * Math.PI / 180;
+            const a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+                      Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+                      Math.sin(dLng/2) * Math.sin(dLng/2);
+            const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+            return R * c;
+        }
+        
+        function getCurrentLocation() {
+            if (navigator.geolocation) {
+                document.getElementById('hospitalsContainer').innerHTML = '<div class="loading">Getting your location...</div>';
+                navigator.geolocation.getCurrentPosition(
+                    (position) => {
+                        const lat = position.coords.latitude;
+                        const lng = position.coords.longitude;
+                        localStorage.setItem('userLat', lat);
+                        localStorage.setItem('userLng', lng);
+                        displayHospitalsByCoordinates(lat, lng);
+                    },
+                    (error) => {
+                        alert('Unable to get your location. Please enable location services.');
+                        document.getElementById('hospitalsContainer').innerHTML = '<div class="no-results">Unable to access location. Please try searching by city name.</div>';
+                    }
+                );
+            }
+        }
+        
+        function searchByLocation() {
+            const city = document.getElementById('searchCity').value.trim();
+            
+            if (!city) {
+                alert('Please enter a city or area name.');
+                return;
+            }
+            
+            // Filter hospitals by city
+            const filteredHospitals = allHospitals.filter(hospital => 
+                hospital.city.toLowerCase().includes(city.toLowerCase())
+            );
+            
+            if (filteredHospitals.length === 0) {
+                document.getElementById('hospitalsContainer').innerHTML = 
+                    `<div class="no-results">No hospitals found in "${city}". Try another location.</div>`;
+                return;
+            }
+            
+            displayHospitals(filteredHospitals);
+        }
+        
+        function displayHospitalsByCoordinates(userLat, userLng) {
+            // Calculate distance for all hospitals
+            const hospitalsWithDistance = allHospitals.map(hospital => ({
+                ...hospital,
+                distance: calculateDistance(userLat, userLng, hospital.lat, hospital.lng)
+            }));
+            
+            // Sort by distance
+            hospitalsWithDistance.sort((a, b) => a.distance - b.distance);
+            
+            displayHospitals(hospitalsWithDistance);
+        }
+        
+        function displayHospitals(hospitals) {
+            const container = document.getElementById('hospitalsContainer');
+            container.innerHTML = '';
+            
+            if (hospitals.length === 0) {
+                container.innerHTML = '<div class="no-results">No hospitals found.</div>';
+                return;
+            }
+            
+            hospitals.forEach(hospital => {
+                const bedStatus = getBedStatus(hospital.beds);
+                const distanceText = hospital.distance ? `📍 ${hospital.distance.toFixed(2)} km away` : '📍 Location';
+                const html = `
+                    <div class="hospital-card">
+                        <div class="hospital-header">
+                            <div class="hospital-name">${hospital.name}</div>
+                            <div class="distance">${distanceText}</div>
+                        </div>
+                        <div class="hospital-body">
+                            <div class="info-item">
+                                <div class="label">Contact</div>
+                                <div class="value">${hospital.phone}</div>
+                            </div>
+                            
+                            <div class="info-item">
+                                <div class="label">Address</div>
+                                <div class="value">${hospital.address}</div>
+                            </div>
+                            
+                            <div class="info-item">
+                                <div class="label">Real-time Bed Availability</div>
+                                <div class="bed-availability">
+                                    <div class="bed-item">
+                                        <div class="bed-count">${hospital.beds.general}</div>
+                                        <div class="bed-type">General Beds</div>
+                                    </div>
+                                    <div class="bed-item">
+                                        <div class="bed-count">${hospital.beds.icu}</div>
+                                        <div class="bed-type">ICU Beds</div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="info-item">
+                                <div class="label">Status</div>
+                                <div class="value ${bedStatus.class}">${bedStatus.text}</div>
+                            </div>
+                            
+                            <div class="info-item">
+                                <div class="label">Doctors on Duty</div>
+                                <div class="value">👨‍⚕️ ${hospital.doctors}</div>
+                            </div>
+                            
+                            <div class="info-item">
+                                <div class="label">Rating</div>
+                                <div class="value">⭐ ${hospital.rating}/5</div>
+                            </div>
+                            
+                            <div class="info-item">
+                                <div class="label">Services</div>
+                                <div class="value">${hospital.services.join(', ')}</div>
+                            </div>
+                            
+                            <div class="action-buttons">
+                                <button class="btn-details" onclick="viewDetails(${hospital.id})">View Details</button>
+                                <button class="btn-admit" onclick="initiateAdmission(${hospital.id})">Request Admission</button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                container.innerHTML += html;
+            });
+        }
+        
+        function getBedStatus(beds) {
+            const totalBeds = beds.general + beds.icu + beds.critical;
+            if (totalBeds > 10) {
+                return { text: '✅ Beds Available', class: 'status-available' };
+            } else if (totalBeds > 5) {
+                return { text: '⚠️ Limited Beds', class: 'status-low' };
+            } else {
+                return { text: '❌ Hospital Full', class: 'status-full' };
+            }
+        }
+        
+        function viewDetails(hospitalId) {
+            alert(`Opening detailed view for Hospital ${hospitalId}`);
+        }
+        
+        function initiateAdmission(hospitalId) {
+            alert(`Initiating admission process for Hospital ${hospitalId}`);
+        }
+    </script>
+</body>
+</html>

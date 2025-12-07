@@ -16,3 +16,5 @@ def emergency(request):
     return render(request, 'emergency.html')
 def ai_assisstance(request):
     return render(request, 'ai-assisstance.html')
+def hospitalavailable(request):
+    return render(request, 'hospitalavailable.html')
