@@ -168,7 +168,8 @@
             <div class="service-icon">🏥</div>
             <h3>Hospital Availability</h3>
             <p>Check real-time bed availability and hospital details</p>
-            <button class="service-btn">Find Hospitals</button>
+            <br>
+            <a href="{% url 'hospitalavailable' %}" class="service-btn">Find Hospitals</a>
         </div>
 
         <!-- Specialist Available -->
@@ -184,7 +185,8 @@
             <div class="service-icon">🚨</div>
             <h3>Emergency</h3>
             <p>Quick access to emergency services and ambulance</p>
-            <button class="service-btn">Call Emergency</button>
+            <a href="{% url 'emergency' %}"  class="service-btn"> Call Emergency</a>
+            
         </div>
 
         <!-- Appointment Booking -->
@@ -202,7 +204,7 @@
             <div class="service-icon">📋</div>
             <h3>Medical Records</h3>
             <p>Access and manage your medical history securely</p>
-            <button class="service-btn">View Records</button>
+            <a href="{% url 'medicalrecords' %}" class="service-btn">View Records</a>
         </div>
 
         <!-- AI Assistant -->

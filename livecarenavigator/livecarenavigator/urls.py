@@ -16,8 +16,10 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from livecareapp.views import home,location,registration
-from livecareapp.views import home,login,bookingappointment
+from livecareapp.views import home,location
+from livecareapp.views import home,login,bookingappointment,medicalrecords
+from livecareapp.views import home,location,registration,hospitalavailable
+from livecareapp.views import home,login,bookingappointment,emergency
 urlpatterns =[
     path('admin/', admin.site.urls),
 
@@ -29,6 +31,9 @@ urlpatterns =[
     path('location/',location,name='location'),
     path('login/', login, name='login'),
     path('bookingappointment/', bookingappointment, name='bookingappointment'),
+    path('medicalrecords/', medicalrecords, name='medicalrecords'),
     path('registration/',registration,name='registration'),
+    path('emergency/', emergency, name='emergency'),
+    path('hospitalavailable/',hospitalavailable,name='hospitalavailable'),
 
 ]
