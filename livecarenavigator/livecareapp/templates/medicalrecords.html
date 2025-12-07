@@ -8,6 +8,53 @@
         <div class="col-md-10 offset-md-1">
             <h1 class="mb-4">Medical Records</h1>
             
+            <!-- Emergency Button -->
+            <div class="alert alert-danger mb-4">
+                <button id="emergencyBtn" class="btn btn-danger btn-lg">
+                    <i class="bi bi-exclamation-triangle"></i> Emergency - Find Nearest Hospital & Ambulance
+                </button>
+            </div>
+
+            <!-- Emergency Modal -->
+            <div class="modal fade" id="emergencyModal" tabindex="-1">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header bg-danger text-white">
+                            <h5 class="modal-title">Emergency Services</h5>
+                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div id="loadingSpinner" class="text-center">
+                                <div class="spinner-border text-danger" role="status">
+                                    <span class="visually-hidden">Loading...</span>
+                                </div>
+                                <p>Locating nearest hospital...</p>
+                            </div>
+                            <div id="emergencyResults" style="display:none;">
+                                <h6>Nearest Hospital</h6>
+                                <div class="card mb-3">
+                                    <div class="card-body">
+                                        <h6 class="card-title" id="hospitalName"></h6>
+                                        <p class="card-text" id="hospitalAddress"></p>
+                                        <p class="card-text"><strong>Distance:</strong> <span id="hospitalDistance"></span></p>
+                                        <p class="card-text"><strong>Phone:</strong> <span id="hospitalPhone"></span></p>
+                                    </div>
+                                </div>
+                                <h6>Ambulance Availability</h6>
+                                <div class="card">
+                                    <div class="card-body">
+                                        <p id="ambulanceStatus"></p>
+                                        <button class="btn btn-success" id="requestAmbulanceBtn">Request Ambulance</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="errorMessage" class="alert alert-warning" style="display:none;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Medical Records Card -->
             <div class="card">
                 <div class="card-header bg-primary text-white">
                     <h5 class="mb-0">Your Medical Records</h5>
@@ -54,4 +101,69 @@
         </div>
     </div>
 </div>
+
+<script>
+document.getElementById('emergencyBtn').addEventListener('click', function() {
+    const modal = new bootstrap.Modal(document.getElementById('emergencyModal'));
+    modal.show();
+    findNearestHospital();
+});
+
+function findNearestHospital() {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function(position) {
+            const userLat = position.coords.latitude;
+            const userLng = position.coords.longitude;
+            
+            fetch('{% url "find_nearest_hospital" %}', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': '{{ csrf_token }}'
+                },
+                body: JSON.stringify({
+                    latitude: userLat,
+                    longitude: userLng
+                })
+            })
+            .then(response => response.json())
+            .then(data => displayEmergencyResults(data))
+            .catch(error => showError('Failed to find hospital: ' + error));
+        }, function() {
+            showError('Unable to access your location. Please enable location services.');
+        });
+    }
+}
+
+function displayEmergencyResults(data) {
+    document.getElementById('loadingSpinner').style.display = 'none';
+    document.getElementById('emergencyResults').style.display = 'block';
+    
+    document.getElementById('hospitalName').textContent = data.hospital_name;
+    document.getElementById('hospitalAddress').textContent = data.address;
+    document.getElementById('hospitalDistance').textContent = data.distance + ' km away';
+    document.getElementById('hospitalPhone').textContent = data.phone;
+    document.getElementById('ambulanceStatus').textContent = data.ambulance_available ? 
+        'Ambulance available at this hospital' : 'No ambulance currently available';
+}
+
+function showError(message) {
+    document.getElementById('loadingSpinner').style.display = 'none';
+    document.getElementById('errorMessage').style.display = 'block';
+    document.getElementById('errorMessage').textContent = message;
+}
+
+document.getElementById('requestAmbulanceBtn').addEventListener('click', function() {
+    fetch('{% url "request_ambulance" %}', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': '{{ csrf_token }}'
+        }
+    })
+    .then(response => response.json())
+    .then(data => alert('Ambulance requested! ETA: ' + data.eta))
+    .catch(error => alert('Error requesting ambulance'));
+});
+</script>
 {% endblock %}
