@@ -152,14 +152,14 @@
     <header>
         <a href="{% url 'home' %}" class="logo" style="color: white; text-decoration: none;">🏥 LiveCare Navigator</a>
         <div class="user-profile">
-            {% if user.is_authenticated %}
-                <span>Welcome, {{ user.first_name|default:user.username }}</span>
-                <div class="profile-avatar">👤</div>
-                <a href="{% url 'logout' %}" class="login-btn">Logout</a>
-            {% else %}
+            
+                <span>Welcome, </span>
+                
+            
+            
                 <div class="profile-avatar">👤</div>
                 <a href="{% url 'login' %}" class="login-btn">Login</a>
-            {% endif %}
+            
         </div>
     </header>
 
