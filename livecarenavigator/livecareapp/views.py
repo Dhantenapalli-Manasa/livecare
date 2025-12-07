@@ -14,3 +14,5 @@ def registration(request):
     return render(request,'registration.html')
 def emergency(request):
     return render(request, 'emergency.html')
+def ai_assisstance(request):
+    return render(request, 'ai-assisstance.html')

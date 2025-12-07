@@ -19,7 +19,7 @@ from django.urls import path
 from livecareapp.views import home,location
 from livecareapp.views import home,login,bookingappointment,medicalrecords
 from livecareapp.views import home,location,registration
-from livecareapp.views import home,login,bookingappointment,emergency
+from livecareapp.views import home,login,bookingappointment,emergency,ai_assisstance
 urlpatterns =[
     path('admin/', admin.site.urls),
 
@@ -34,5 +34,6 @@ urlpatterns =[
     path('medicalrecords/', medicalrecords, name='medicalrecords'),
     path('registration/',registration,name='registration'),
     path('emergency/', emergency, name='emergency'),
+    path('ai-assisstance/', ai_assisstance, name='ai-assisstance'),
 
 ]
