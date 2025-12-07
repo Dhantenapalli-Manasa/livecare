@@ -17,11 +17,12 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from livecareapp.views import home,location
-from livecareapp.views import home,login,bookingappointment
+from livecareapp.views import home,login,bookingappointment,medicalrecords
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('home/',home,name='home'),
     path('location/',location,name='location'),
     path('login/', login, name='login'),
     path('bookingappointment/', bookingappointment, name='bookingappointment'),
+    path('medicalrecords/', medicalrecords, name='medicalrecords'),
 ]

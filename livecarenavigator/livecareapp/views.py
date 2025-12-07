@@ -7,3 +7,5 @@ def login(request):
     return render(request, 'login.html')
 def bookingappointment(request):
     return render(request, 'bookingappointment.html')
+def medicalrecords(request):
+    return render(request, 'medicalrecords.html')
