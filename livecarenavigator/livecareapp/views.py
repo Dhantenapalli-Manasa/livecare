@@ -18,3 +18,7 @@ def ai_assisstance(request):
     return render(request, 'ai-assisstance.html')
 def hospitalavailable(request):
     return render(request, 'hospitalavailable.html')
+def userprofile(request):
+    return render(request, 'userprofile.html')
+def started(request):
+    return render(request, 'started.html')

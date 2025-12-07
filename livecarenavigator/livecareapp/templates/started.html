@@ -3,18 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LiveCare Navigator - Healthcare at Your Fingertips</title>
+    <title>LiveCare Navigator - Get Started</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
+
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             line-height: 1.6;
             color: #333;
         }
+
         header {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
@@ -22,17 +24,19 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
+
         .logo {
             font-size: 1.8rem;
             font-weight: bold;
         }
+
         .user-profile {
             display: flex;
             align-items: center;
             gap: 1rem;
         }
+
         .profile-avatar {
             width: 40px;
             height: 40px;
@@ -43,6 +47,7 @@
             justify-content: center;
             cursor: pointer;
         }
+
         .login-btn {
             background: white;
             color: #667eea;
@@ -51,39 +56,24 @@
             border-radius: 5px;
             cursor: pointer;
             font-weight: bold;
+            text-decoration: none;
         }
-        .hero {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
+
+        h1 {
             text-align: center;
-            padding: 4rem 2rem;
-        }
-        .hero h1 {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-        }
-        .hero p {
-            font-size: 1.2rem;
-            margin-bottom: 2rem;
-        }
-        .cta-button {
-            background: white;
+            margin: 2rem 0;
             color: #667eea;
-            padding: 1rem 2rem;
-            border: none;
-            border-radius: 5px;
-            font-size: 1rem;
-            cursor: pointer;
-            font-weight: bold;
         }
+
         .services {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 2rem;
-            padding: 3rem 2rem;
+            padding: 2rem;
             max-width: 1200px;
             margin: 0 auto;
         }
+
         .service-card {
             background: white;
             border-radius: 10px;
@@ -92,17 +82,21 @@
             box-shadow: 0 4px 6px rgba(0,0,0,0.1);
             transition: transform 0.3s;
         }
+
         .service-card:hover {
             transform: translateY(-5px);
         }
+
         .service-icon {
             font-size: 3rem;
             margin-bottom: 1rem;
         }
+
         .service-card h3 {
             margin-bottom: 1rem;
             color: #667eea;
         }
+
         .service-btn {
             background: #667eea;
             color: white;
@@ -111,7 +105,10 @@
             border-radius: 5px;
             cursor: pointer;
             margin-top: 1rem;
+            text-decoration: none;
+            display: inline-block;
         }
+
         footer {
             background: #333;
             color: white;
@@ -119,105 +116,105 @@
             padding: 2rem;
             margin-top: 3rem;
         }
+
         footer p {
             margin: 0.5rem 0;
         }
+
         .footer-links {
             margin-top: 1rem;
         }
+
         .footer-links a {
             color: #667eea;
             margin: 0 1rem;
             text-decoration: none;
+        }
+
+        .back-btn {
+            display: inline-block;
+            margin-top: 1rem;
+            padding: 0.5rem 1.5rem;
+            background: #667eea;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+
+        .back-btn:hover {
+            background: #5568d3;
         }
     </style>
 </head>
 <body>
     <!-- Header -->
     <header>
-        <div class="logo">🏥 LiveCare Navigator</div>
+        <a href="{% url 'home' %}" class="logo" style="color: white; text-decoration: none;">🏥 LiveCare Navigator</a>
         <div class="user-profile">
-            <span>Welcome, User</span>
-            <div class="profile-avatar">👤</div>
-            <a href="{% url 'login' %}" class="login-btn">Login</a>
-
-           
+            {% if user.is_authenticated %}
+                <span>Welcome, {{ user.first_name|default:user.username }}</span>
+                <div class="profile-avatar">👤</div>
+                <a href="{% url 'logout' %}" class="login-btn">Logout</a>
+            {% else %}
+                <div class="profile-avatar">👤</div>
+                <a href="{% url 'login' %}" class="login-btn">Login</a>
+            {% endif %}
         </div>
     </header>
 
-    <!-- Hero Section -->
-    <section class="hero">
-        <h1>Your Health, Our Priority</h1>
-        <p>Find hospitals, specialists, book appointments, and get AI-powered health assistance</p>
-        
-        <a href="{% url 'started' %}" class="cta-button">Get Started</a>
-    </section>
+    <!-- Page Title -->
+    <h1>Get Started with LiveCare Navigator</h1>
 
     <!-- Services Section -->
     <section class="services">
-        <!-- Location Service -->
         <div class="service-card">
             <div class="service-icon">📍</div>
             <h3>Your Location</h3>
             <p>Share your location to find nearby healthcare facilities</p>
-            <br>
-            <a href="{% url 'location' %}"  class="service-btn">  Enable Location</a>
+            <a href="{% url 'location' %}" class="service-btn">Enable Location</a>
         </div>
 
-        <!-- Hospital Availability -->
         <div class="service-card">
             <div class="service-icon">🏥</div>
             <h3>Hospital Availability</h3>
             <p>Check real-time bed availability and hospital details</p>
-            <br>
             <a href="{% url 'hospitalavailable' %}" class="service-btn">Find Hospitals</a>
         </div>
 
-        <!-- Specialist Available -->
         <div class="service-card">
             <div class="service-icon">👨‍⚕️</div>
             <h3>Specialists</h3>
             <p>Find and connect with available medical specialists</p>
-            <button class="service-btn">Browse Specialists</button>
+            <a href="#" class="service-btn">Browse Specialists</a>
         </div>
 
-        <!-- Emergency -->
         <div class="service-card">
             <div class="service-icon">🚨</div>
             <h3>Emergency</h3>
             <p>Quick access to emergency services and ambulance</p>
-            <br>
-            <a href="{% url 'emergency' %}"  class="service-btn"> Call Emergency</a>
-            
+            <a href="{% url 'emergency' %}" class="service-btn">Call Emergency</a>
         </div>
 
-        <!-- Appointment Booking -->
         <div class="service-card">
             <div class="service-icon">📅</div>
             <h3>Book Appointment</h3>
             <p>Schedule appointments with doctors and specialists</p>
-            <br>
             <a href="{% url 'bookingappointment' %}" class="service-btn">Book Now</a>
-
         </div>
 
-        <!-- Medical Records -->
         <div class="service-card">
             <div class="service-icon">📋</div>
             <h3>Medical Records</h3>
             <p>Access and manage your medical history securely</p>
-            <br>
             <a href="{% url 'medicalrecords' %}" class="service-btn">View Records</a>
         </div>
 
-        <!-- AI Assistant -->
         <div class="service-card">
             <div class="service-icon">🤖</div>
             <h3>AI Assistant</h3>
             <p>Get instant health advice from our AI-powered assistant</p>
-            <br>
-            <a href="{% url 'ai-assisstance' %}"  class="service-btn"> Chat with AI</a>
-            
+            <a href="{% url 'ai-assisstance' %}" class="service-btn">Chat with AI</a>
         </div>
     </section>
 
@@ -231,6 +228,9 @@
             <a href="#about">About Us</a>
         </div>
         <p>24/7 Customer Support: 1-800-LIVECARE</p>
+
+        <!-- Back Button -->
+        <a href="{% url 'home' %}" class="back-btn">⬅ Back to Landing Page</a>
     </footer>
 </body>
 </html>

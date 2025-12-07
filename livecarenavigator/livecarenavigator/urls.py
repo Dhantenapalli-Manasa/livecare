@@ -21,7 +21,7 @@ from livecareapp.views import home,login,bookingappointment,medicalrecords
 from livecareapp.views import home,location,registration,hospitalavailable
 from livecareapp.views import home,login,bookingappointment,emergency
 from livecareapp.views import home,location,registration
-from livecareapp.views import home,login,bookingappointment,emergency,ai_assisstance
+from livecareapp.views import home,login,bookingappointment,emergency,ai_assisstance,userprofile,started
 urlpatterns =[
     path('admin/', admin.site.urls),
 
@@ -40,6 +40,8 @@ urlpatterns =[
     path('hospitalavailable/',hospitalavailable,name='hospitalavailable'),
 
     path('ai-assisstance/', ai_assisstance, name='ai-assisstance'),
+    path('user/', userprofile, name='userprofile'),
+    path('started/', started, name='started'),
 
 
 ]
