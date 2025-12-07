@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Appointment - LiveCare Navigator</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            color: #333;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+            font-weight: bold;
+        }
+        
+        input, select, textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+            font-family: Arial, sans-serif;
+        }
+        
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #4CAF50;
+            box-shadow: 0 0 5px rgba(76, 175, 80, 0.3);
+        }
+        
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+        
+        .button-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 30px;
+        }
+        
+        button {
+            flex: 1;
+            padding: 12px;
+            font-size: 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        
+        .btn-submit {
+            background-color: #4CAF50;
+            color: white;
+        }
+        
+        .btn-submit:hover {
+            background-color: #45a049;
+        }
+        
+        .btn-back {
+            background-color: #008CBA;
+            color: white;
+        }
+        
+        .btn-back:hover {
+            background-color: #007399;
+        }
+        
+        .success-message {
+            display: none;
+            color: #4CAF50;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Book an Appointment</h1>
+        
+        <div class="success-message" id="successMessage">
+            Appointment booked successfully!
+        </div>
+        
+        <form id="appointmentForm" method="POST" action="{% url 'bookingappointment' %}">
+            {% csrf_token %}
+            
+            <div class="form-group">
+                <label for="patientName">Full Name *</label>
+                <input type="text" id="patientName" name="patient_name" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="email">Email *</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="phone">Phone Number *</label>
+                <input type="tel" id="phone" name="phone" pattern="[0-9]{10}" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="specialist">Select Specialist *</label>
+                <select id="specialist" name="specialist" required>
+                    <option value="">-- Select a Specialist --</option>
+                    <option value="Cardiologist">Cardiologist</option>
+                    <option value="Dermatologist">Dermatologist</option>
+                    <option value="Neurologist">Neurologist</option>
+                    <option value="Orthopedist">Orthopedist</option>
+                    <option value="General Physician">General Physician</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="appointmentDate">Appointment Date *</label>
+                <input type="date" id="appointmentDate" name="appointment_date" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="appointmentTime">Appointment Time *</label>
+                <input type="time" id="appointmentTime" name="appointment_time" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="symptoms">Symptoms/Reason for Visit</label>
+                <textarea id="symptoms" name="symptoms" placeholder="Describe your symptoms or reason for visit..."></textarea>
+            </div>
+            
+            <div class="button-group">
+                <button type="submit" class="btn-submit">Book Appointment</button>
+                <button type="button" class="btn-back" onclick="goToLandingPage()">Back</button>
+            </div>
+        </form>
+    </div>
+    
+    <script>
+        function goToLandingPage() {
+    window.location.href = "{% url 'home' %}";
+         }
+        
+        document.getElementById('appointmentForm').addEventListener('submit', function(e) {
+            const appointmentDate = new Date(document.getElementById('appointmentDate').value);
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+            
+            if (appointmentDate < today) {
+                e.preventDefault();
+                alert('Please select a future date for the appointment');
+                return false;
+            }
+        });
+    </script>
+</body>
+</html>

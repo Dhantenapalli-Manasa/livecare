@@ -1,10 +1,11 @@
 from django.shortcuts import render
 def home(request):
-    return render(request,'landing.html')
-
+    return render(request, 'landing.html')
 def location(request):
-    return render(request,'location.html')
+    return render(request, 'location.html')
 def login(request):
-    return render(request,'login.html')
-
-# Create your views here.
+    return render(request, 'login.html')
+def bookingappointment(request):
+    return render(request, 'bookingappointment.html')
+def registration(request):
+    return render(request,'registration.html')
