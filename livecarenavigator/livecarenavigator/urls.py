@@ -18,13 +18,13 @@ from django.contrib import admin
 from django.urls import path
 from livecareapp.views import home,location
 from livecareapp.views import home,login,bookingappointment,medicalrecords
-<<<<<<< HEAD
+
 from livecareapp.views import home,location,registration,hospitalavailable
 from livecareapp.views import home,login,bookingappointment,emergency
-=======
+
 from livecareapp.views import home,location,registration
 from livecareapp.views import home,login,bookingappointment,emergency,ai_assisstance
->>>>>>> 83893ee71238d846f68f1e957b9c27be9bc3fe38
+
 urlpatterns =[
     path('admin/', admin.site.urls),
 
@@ -39,10 +39,10 @@ urlpatterns =[
     path('medicalrecords/', medicalrecords, name='medicalrecords'),
     path('registration/',registration,name='registration'),
     path('emergency/', emergency, name='emergency'),
-<<<<<<< HEAD
+
     path('hospitalavailable/',hospitalavailable,name='hospitalavailable'),
-=======
+
     path('ai-assisstance/', ai_assisstance, name='ai-assisstance'),
->>>>>>> 83893ee71238d846f68f1e957b9c27be9bc3fe38
+
 
 ]
