@@ -38,12 +38,18 @@
         button:hover {
             background-color: #764ba2;
         }
-        #location-info {
+        #location-info, #manual-location-box {
             margin-top: 20px;
             padding: 15px;
             background-color: #f0f0f0;
             border-radius: 5px;
             display: none;
+        }
+        input {
+            padding: 10px;
+            width: 90%;
+            font-size: 16px;
+            margin-top: 10px;
         }
         .spinner {
             display: none;
@@ -63,34 +69,54 @@
 </head>
 <body>
     <div class="container">
+
         <h1>Find Nearby Hospitals</h1>
+
+        <!-- Use GPS -->
         <button onclick="getLocation()">Use My Location</button>
+
         <div class="spinner" id="spinner"></div>
+
+        <!-- GPS Location Display -->
         <div id="location-info">
             <p><strong>Latitude:</strong> <span id="latitude"></span></p>
             <p><strong>Longitude:</strong> <span id="longitude"></span></p>
-            <button onclick="findHospitals()">Find Hospitals</button>
         </div>
+
+        <!-- Manual Location Box -->
+        <button onclick="showManualBox()">Type Location Manually</button>
+
+        <div id="manual-location-box">
+            <input type="text" id="manual-location" placeholder="Enter city, area, or address">
+        </div>
+
+        <button onclick="findHospitals()">Find Hospitals</button>
+
         <div id="error-message" style="color: red; margin-top: 10px;"></div>
+
+        <!-- BACK BUTTON AT THE BOTTOM -->
+        <button style="margin-top: 25px;" onclick="window.location.href='/home/'">
+            ⬅ Back to Landing Page
+        </button>
+
     </div>
 
     <script>
         function getLocation() {
             document.getElementById('spinner').style.display = 'block';
             document.getElementById('error-message').textContent = '';
-            
+
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(
                     function(position) {
                         const lat = position.coords.latitude;
                         const lon = position.coords.longitude;
-                        
+
                         document.getElementById('latitude').textContent = lat.toFixed(4);
                         document.getElementById('longitude').textContent = lon.toFixed(4);
                         document.getElementById('location-info').style.display = 'block';
                         document.getElementById('spinner').style.display = 'none';
-                        
-                        // Store location in session
+
                         fetch('/set-location/', {
                             method: 'POST',
                             headers: {
@@ -111,10 +137,24 @@
             }
         }
 
+        function showManualBox() {
+            document.getElementById('manual-location-box').style.display = 'block';
+        }
+
         function findHospitals() {
             const lat = document.getElementById('latitude').textContent;
             const lon = document.getElementById('longitude').textContent;
-            window.location.href = `/hospitals/?latitude=${lat}&longitude=${lon}`;
+            const manual = document.getElementById('manual-location').value;
+
+            if (manual.trim() !== "") {
+                window.location.href = `/hospitals/?location=${manual}`;
+            } 
+            else if (lat && lon) {
+                window.location.href = `/hospitals/?latitude=${lat}&longitude=${lon}`;
+            } 
+            else {
+                document.getElementById('error-message').textContent = 'Please use GPS or type a location.';
+            }
         }
 
         function getCookie(name) {
