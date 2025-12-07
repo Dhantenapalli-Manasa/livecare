@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Location</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        .container {
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            max-width: 500px;
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+        button {
+            background-color: #667eea;
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 10px;
+        }
+        button:hover {
+            background-color: #764ba2;
+        }
+        #location-info {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f0f0f0;
+            border-radius: 5px;
+            display: none;
+        }
+        .spinner {
+            display: none;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Find Nearby Hospitals</h1>
+        <button onclick="getLocation()">Use My Location</button>
+        <div class="spinner" id="spinner"></div>
+        <div id="location-info">
+            <p><strong>Latitude:</strong> <span id="latitude"></span></p>
+            <p><strong>Longitude:</strong> <span id="longitude"></span></p>
+            <button onclick="findHospitals()">Find Hospitals</button>
+        </div>
+        <div id="error-message" style="color: red; margin-top: 10px;"></div>
+    </div>
+
+    <script>
+        function getLocation() {
+            document.getElementById('spinner').style.display = 'block';
+            document.getElementById('error-message').textContent = '';
+            
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    function(position) {
+                        const lat = position.coords.latitude;
+                        const lon = position.coords.longitude;
+                        
+                        document.getElementById('latitude').textContent = lat.toFixed(4);
+                        document.getElementById('longitude').textContent = lon.toFixed(4);
+                        document.getElementById('location-info').style.display = 'block';
+                        document.getElementById('spinner').style.display = 'none';
+                        
+                        // Store location in session
+                        fetch('/set-location/', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRFToken': getCookie('csrftoken')
+                            },
+                            body: JSON.stringify({latitude: lat, longitude: lon})
+                        });
+                    },
+                    function(error) {
+                        document.getElementById('spinner').style.display = 'none';
+                        document.getElementById('error-message').textContent = 'Error: ' + error.message;
+                    }
+                );
+            } else {
+                document.getElementById('error-message').textContent = 'Geolocation not supported by browser';
+                document.getElementById('spinner').style.display = 'none';
+            }
+        }
+
+        function findHospitals() {
+            const lat = document.getElementById('latitude').textContent;
+            const lon = document.getElementById('longitude').textContent;
+            window.location.href = `/hospitals/?latitude=${lat}&longitude=${lon}`;
+        }
+
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+    </script>
+</body>
+</html>
