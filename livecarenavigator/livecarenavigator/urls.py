@@ -18,11 +18,21 @@ from django.contrib import admin
 from django.urls import path
 from livecareapp.views import home,location
 from livecareapp.views import home,login,bookingappointment,medicalrecords
-urlpatterns = [
+from livecareapp.views import home,location,registration
+from livecareapp.views import home,login,bookingappointment,emergency
+urlpatterns =[
     path('admin/', admin.site.urls),
+
+    path('home/',home),
+    path('location/',location,name='location'),
+    path('login/', login, name='login'),
+
     path('home/',home,name='home'),
     path('location/',location,name='location'),
     path('login/', login, name='login'),
     path('bookingappointment/', bookingappointment, name='bookingappointment'),
     path('medicalrecords/', medicalrecords, name='medicalrecords'),
+    path('registration/',registration,name='registration'),
+    path('emergency/', emergency, name='emergency'),
+
 ]

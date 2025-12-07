@@ -49,11 +49,11 @@
                 {% endif %}
             </div>
             
-            <button type="submit" class="btn-login">Login</button>
+            <a href="{% url 'home' %}"  class="btn-login">login</a>
         </form>
         
         <p class="signup-link">
-            Don't have an account? <a href="">Sign up here</a>
+            Don't have an account? <a href="{% url 'registration'%}">Sign up here</a>
         </p>
     </div>
 </div>
