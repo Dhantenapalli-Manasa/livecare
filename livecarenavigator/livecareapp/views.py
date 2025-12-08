@@ -1,37 +1,47 @@
 from django.shortcuts import render
+
 def home(request):
     return render(request, 'landing.html')
+
 def location(request):
     return render(request, 'location.html')
+
 def login(request):
     return render(request, 'login.html')
+
 def bookingappointment(request):
     return render(request, 'bookingappointment.html')
+
 def medicalrecords(request):
     return render(request, 'medicalrecords.html')
 
 def registration(request):
     return render(request,'registration.html')
+
 def emergency(request):
     return render(request, 'emergency.html')
 
-
 def hospitalavailable(request):
     return render(request,'hospitalavailable.html')
-def ai_assisstance(request):
-    return render(request, 'ai-assisstance.html')
-
 
 def ai_assisstance(request):
     return render(request, 'ai-assisstance.html')
-def hospitalavailable(request):
-    return render(request, 'hospitalavailable.html')
 
 def userprofile(request):
     return render(request, 'userprofile.html')
+
 def started(request):
     return render(request, 'started.html')
 
 def specialist(request):
     return render(request,'specialist.html')
 
+def privacy(request):
+    return render(request, 'privacy.html')
+
+def termsofservice(request):
+    return render(request, 'termsofservice.html')
+def contactus(request):
+    return render(request, 'contactus.html')
+def aboutus(request):
+    return render(request, 'aboutus.html')

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - LiveCare Navigator</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px 0;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        .content {
+            background: #f9f9f9;
+            padding: 30px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .content h2 {
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+        .content p {
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+        footer {
+            background: #333;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            border-radius: 8px;
+        }
+        .back-btn {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 12px 30px;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background 0.3s ease;
+            margin-top: 10px;
+        }
+        .back-btn:hover {
+            background: #764ba2;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>About LiveCare Navigator</h1>
+        </header>
+
+        <div class="content">
+            <h2>Who We Are</h2>
+            <p>
+                LiveCare Navigator is a comprehensive healthcare management platform designed to connect patients 
+                with quality healthcare services and information. We are committed to making healthcare accessible, 
+                affordable, and efficient for everyone.
+            </p>
+        </div>
+
+        <div class="content">
+            <h2>Our Mission</h2>
+            <p>
+                Our mission is to bridge the gap between patients and healthcare providers by providing an intuitive 
+                platform that simplifies healthcare navigation, appointment scheduling, and medical record management.
+            </p>
+        </div>
+
+        <div class="content">
+            <h2>Our Vision</h2>
+            <p>
+                We envision a world where healthcare is accessible to everyone, and the process of finding and 
+                accessing quality care is simple, transparent, and hassle-free.
+            </p>
+        </div>
+
+        <div class="content">
+            <h2>Why Choose Us</h2>
+            <p>
+                With years of experience in healthcare technology, we provide a reliable platform that prioritizes 
+                user experience, data security, and healthcare excellence. Our team is dedicated to continuous improvement 
+                and innovation in healthcare solutions.
+            </p>
+        </div>
+
+        <footer>
+            <p>&copy; 2024 LiveCare Navigator. All rights reserved.</p>
+            <a href="{% url 'home' %}" class="back-btn">← Back to Home</a>
+        </footer>
+    </div>
+</body>
+</html>
