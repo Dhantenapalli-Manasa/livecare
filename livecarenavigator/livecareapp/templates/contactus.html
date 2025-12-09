@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+        }
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        .back-btn {
+            display: inline-block;
+            margin-bottom: 30px;
+            padding: 10px 20px;
+            background-color: white;
+            color: #667eea;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+        .back-btn:hover {
+            background-color: #f0f0f0;
+        }
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        .team-member {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s;
+        }
+        .team-member:hover {
+            transform: translateY(-10px);
+        }
+        .team-member h3 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 1.3em;
+        }
+        .team-member p {
+            color: #666;
+            margin: 8px 0;
+            font-size: 0.95em;
+        }
+        .role {
+            color: #764ba2;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        
+        <div class="header">
+            <h1>Contact Our Team</h1>
+            <p>Get in touch with us for more information</p>
+        </div>
+
+        <div class="team-grid">
+            <div class="team-member">
+                <h3>D.Manasa</h3>
+                <p class="role">Team Lead</p>
+                <p>📧 maanasadhantenapalli@gmail.com</p>
+                <p>📱 9346060941</p>
+            </div>
+
+            <div class="team-member">
+                <h3>E.Vaishnavi</h3>
+                <p class="role">Support Manager</p>
+                <p>📧 vaishnaviessampelly24@gmail.com</p>
+                <p>📱 9014698073</p>
+            </div>
+
+            <div class="team-member">
+                <h3>K.Anusha</h3>
+                <p class="role">Team Member</p>
+                <p>📧 anushagoudkonda518@gmail.com</p>
+                <p>📱 9908151891</p>
+            </div>
+
+            <div class="team-member">
+                <h3>U.Sushmitha</h3>
+                <p class="role">Team Member</p>
+                <p>📧 uppulasushmitha15@gmail.com</p>
+                <p>📱 9849957856</p>
+            </div>
+
+            <div class="team-member">
+                <h3>Soumya</h3>
+                <p class="role">Team Member</p>
+                <p>📧 soumyagoud3333@gmail.com</p>
+                <p>📱 6305635134</p>
+            </div>
+        </div>
+    </div>
+    <center><a href="{% url 'home' %}" class="back-btn">← Back to Home</a></center>
+</body>
+</html>

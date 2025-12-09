@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+<div class="terms-container">
+    <div class="terms-header">
+        <a href="{% url 'home' %}" class="back-button">&larr; Back to Home</a>
+        <h1>Terms of Service</h1>
+    </div>
+
+    <div class="terms-content">
+        <section>
+            <h2>1. Acceptance of Terms</h2>
+            <p>By accessing and using this website, you accept and agree to be bound by the terms and provision of this agreement.</p>
+        </section>
+
+        <section>
+            <h2>2. Use License</h2>
+            <p>Permission is granted to temporarily download one copy of the materials on our website for personal, non-commercial transitory viewing only.</p>
+        </section>
+
+        <section>
+            <h2>3. Disclaimer</h2>
+            <p>The materials on our website are provided on an 'as is' basis. We make no warranties, expressed or implied, and hereby disclaim and negate all other warranties.</p>
+        </section>
+
+        <section>
+            <h2>4. Limitations</h2>
+            <p>In no event shall our company or its suppliers be liable for any damages arising out of the use of materials on our website.</p>
+        </section>
+
+        <section>
+            <h2>5. Accuracy of Materials</h2>
+            <p>The materials appearing on our website could include technical, typographical, or photographic errors. We do not warrant that any of the materials are accurate, complete, or current.</p>
+        </section>
+
+        <section>
+            <h2>6. Links</h2>
+            <p>We have not reviewed all of the sites linked to our website and are not responsible for the contents of any such linked site.</p>
+        </section>
+
+        <section>
+            <h2>7. Modifications</h2>
+            <p>We may revise these terms of service without notice at any time. By using this website, you are agreeing to be bound by the then current version of these terms of service.</p>
+        </section>
+
+        <section>
+            <h2>8. Governing Law</h2>
+            <p>These terms and conditions are governed by and construed in accordance with the laws of your jurisdiction.</p>
+        </section>
+    </div>
+</div>
+
+<style>
+    .terms-container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+    }
+
+    .terms-header {
+        margin-bottom: 30px;
+    }
+
+    .back-button {
+        display: inline-block;
+        margin-bottom: 15px;
+        padding: 10px 15px;
+        background-color: #007bff;
+        color: white;
+        text-decoration: none;
+        border-radius: 5px;
+        transition: background-color 0.3s;
+    }
+
+    .back-button:hover {
+        background-color: #0056b3;
+    }
+
+    .terms-content section {
+        margin-bottom: 25px;
+    }
+
+    .terms-content h2 {
+        color: #333;
+        margin-bottom: 10px;
+    }
+
+    .terms-content p {
+        line-height: 1.6;
+        color: #666;
+    }
+</style>
+</body>
+</html>

@@ -16,6 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from livecareapp.views import register
 from livecareapp.views import home,location
 from livecareapp.views import home,login,bookingappointment,medicalrecords
 
@@ -31,15 +32,16 @@ from livecareapp.views import home,login,bookingappointment,emergency,ai_assisst
 from livecareapp.views import home,location,registration,hospitalavailable
 from livecareapp.views import home,login,bookingappointment,emergency
 from livecareapp.views import home,location,registration,specialist
-from livecareapp.views import home,login,bookingappointment,emergency,ai_assisstance
+from livecareapp.views import home,login,bookingappointment,emergency,ai_assisstance,privacy,termsofservice,contactus,aboutus
 
 
 urlpatterns =[
     path('admin/', admin.site.urls),
+    path('register/', register, name='register'),
 
     path('home/',home),
     path('location/',location,name='location'),
-    path('login/', login, name='login'),
+    path('', login, name='login'),
 
     path('home/',home,name='home'),
     path('location/',location,name='location'),
@@ -56,6 +58,8 @@ urlpatterns =[
     path('user/', userprofile, name='userprofile'),
     path('started/', started, name='started'),
     path('specialist/',specialist,name='specialist'),
-
-
+    path('privacy/', privacy, name='privacy'),
+    path('terms-of-service/', termsofservice, name='termsofservice'),
+    path('contact-us/', contactus, name='contactus'),
+    path('about-us/', aboutus, name='aboutus'),
 ]
