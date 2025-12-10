@@ -1,0 +1,7 @@
+<form method="POST">
+    {% csrf_token %}
+    <input type="text" name="username" placeholder="Admin Username"><br>
+    <input type="email" name="email" placeholder="Admin Email"><br>
+    <input type="password" name="password" placeholder="Admin Password"><br>
+    <button type="submit">Register Admin</button>
+</form>

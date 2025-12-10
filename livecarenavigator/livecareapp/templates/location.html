@@ -1,176 +1,105 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Your Location</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        }
-        .container {
-            background: white;
-            padding: 40px;
-            border-radius: 10px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-            text-align: center;
-            max-width: 500px;
-        }
-        h1 {
-            color: #333;
-            margin-bottom: 20px;
-        }
-        button {
-            background-color: #667eea;
-            color: white;
-            padding: 12px 30px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
-            margin: 10px;
-        }
-        button:hover {
-            background-color: #764ba2;
-        }
-        #location-info, #manual-location-box {
-            margin-top: 20px;
-            padding: 15px;
-            background-color: #f0f0f0;
-            border-radius: 5px;
-            display: none;
-        }
-        input {
-            padding: 10px;
-            width: 90%;
-            font-size: 16px;
-            margin-top: 10px;
-        }
-        .spinner {
-            display: none;
-            border: 4px solid #f3f3f3;
-            border-top: 4px solid #667eea;
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            animation: spin 1s linear infinite;
-            margin: 20px auto;
-        }
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-    </style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Google Map Location</title>
+
+  <style>
+    body { font-family: Arial, Helvetica, sans-serif; margin: 0; padding: 0; }
+    header { padding: 12px; background:#0b63a9; color: white; }
+    main { padding: 12px; }
+
+    #gmap {
+      width: 100%;
+      height: 80vh;
+      border: 0;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.20);
+    }
+
+    .controls { margin-top: 12px; display: flex; gap: 12px; flex-wrap: wrap; }
+    button {
+      padding: 10px 14px;
+      background:#0b63a9;
+      color:white;
+      border: none;
+      border-radius: 6px;
+      cursor:pointer;
+    }
+  </style>
+
+  <script>
+    // ---- USE MY LOCATION ----
+    function useMyLocation() {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(success, error);
+      } else {
+        alert("Geolocation is not supported by this browser.");
+      }
+
+      function success(position) {
+        const lat = position.coords.latitude;
+        const lng = position.coords.longitude;
+
+        document.getElementById("gmap").src =
+          `https://www.google.com/maps?q=${lat},${lng}&z=15&output=embed`;
+      }
+
+      function error() {
+        alert("Unable to fetch your location.");
+      }
+    }
+
+    // ---- TYPE LOCATION MANUALLY ----
+    function enterLocation() {
+      let place = prompt("Enter a city, area, or hospital name:");
+
+      if (place && place.trim() !== "") {
+        document.getElementById("gmap").src =
+          `https://www.google.com/maps?q=${encodeURIComponent(place)}&z=14&output=embed`;
+      }
+    }
+  </script>
+
 </head>
+
 <body>
-    <div class="container">
 
-        <h1>Find Nearby Hospitals</h1>
+<header>
+  <h1>Google Map Location</h1>
+</header>
 
-        <!-- Use GPS -->
-        <button onclick="getLocation()">Use My Location</button>
+<main>
 
-        <div class="spinner" id="spinner"></div>
+  <!-- CLEAN GOOGLE MAP (NO PB PARAMETER) -->
+  <iframe
+    id="gmap"
+    src="https://www.google.com/maps?q=Hyderabad&output=embed"
+    loading="lazy">
+  </iframe>
 
-        <!-- GPS Location Display -->
-        <div id="location-info">
-            <p><strong>Latitude:</strong> <span id="latitude"></span></p>
-            <p><strong>Longitude:</strong> <span id="longitude"></span></p>
-        </div>
+  <!-- BUTTONS -->
+  <div class="controls">
 
-        <!-- Manual Location Box -->
-        <button onclick="showManualBox()">Type Location Manually</button>
+      <button onclick="useMyLocation()">📍 Use My Location</button>
 
-        <div id="manual-location-box">
-            <input type="text" id="manual-location" placeholder="Enter city, area, or address">
-        </div>
+      <button onclick="enterLocation()" style="background:#444;">
+        ✏️ Type Location Manually
+      </button>
 
-        <button onclick="findHospitals()">Find Hospitals</button>
+      <button onclick="window.location.href= " {% url 'hospitalavailable' %}" style="background:green;">
+        🏥 Find Hospitals
+      </button>
 
-        <div id="error-message" style="color: red; margin-top: 10px;"></div>
+      <button onclick="window.location.href='/'" style="background:red;">
+        ⬅ Back to Landing Page
+      </button>
 
-        <!-- BACK BUTTON AT THE BOTTOM -->
-        <button style="margin-top: 25px;" onclick="window.location.href='/home/'">
-            ⬅ Back to Landing Page
-        </button>
+  </div>
 
-    </div>
+</main>
 
-    <script>
-        function getLocation() {
-            document.getElementById('spinner').style.display = 'block';
-            document.getElementById('error-message').textContent = '';
-
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(
-                    function(position) {
-                        const lat = position.coords.latitude;
-                        const lon = position.coords.longitude;
-
-                        document.getElementById('latitude').textContent = lat.toFixed(4);
-                        document.getElementById('longitude').textContent = lon.toFixed(4);
-                        document.getElementById('location-info').style.display = 'block';
-                        document.getElementById('spinner').style.display = 'none';
-
-                        fetch('/set-location/', {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json',
-                                'X-CSRFToken': getCookie('csrftoken')
-                            },
-                            body: JSON.stringify({latitude: lat, longitude: lon})
-                        });
-                    },
-                    function(error) {
-                        document.getElementById('spinner').style.display = 'none';
-                        document.getElementById('error-message').textContent = 'Error: ' + error.message;
-                    }
-                );
-            } else {
-                document.getElementById('error-message').textContent = 'Geolocation not supported by browser';
-                document.getElementById('spinner').style.display = 'none';
-            }
-        }
-
-        function showManualBox() {
-            document.getElementById('manual-location-box').style.display = 'block';
-        }
-
-        function findHospitals() {
-            const lat = document.getElementById('latitude').textContent;
-            const lon = document.getElementById('longitude').textContent;
-            const manual = document.getElementById('manual-location').value;
-
-            if (manual.trim() !== "") {
-                window.location.href = `/hospitals/?location=${manual}`;
-            } 
-            else if (lat && lon) {
-                window.location.href = `/hospitals/?latitude=${lat}&longitude=${lon}`;
-            } 
-            else {
-                document.getElementById('error-message').textContent = 'Please use GPS or type a location.';
-            }
-        }
-
-        function getCookie(name) {
-            let cookieValue = null;
-            if (document.cookie && document.cookie !== '') {
-                const cookies = document.cookie.split(';');
-                for (let i = 0; i < cookies.length; i++) {
-                    const cookie = cookies[i].trim();
-                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                        break;
-                    }
-                }
-            }
-            return cookieValue;
-        }
-    </script>
 </body>
 </html>

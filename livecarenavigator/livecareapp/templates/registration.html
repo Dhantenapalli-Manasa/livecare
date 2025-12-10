@@ -100,67 +100,47 @@
         }
     </style>
 </head>
-<body>
-    <div class="container">
-        <h1>Register</h1>
-        <form method="POST" action="{% url 'registration' %}" onsubmit="navigateHome(event)">
-            {% csrf_token %}
-            
-            <div class="form-group">
-                <label for="username">Username</label>
-                <input type="text" id="username" name="username" required>
-                {% if form.username.errors %}
-                    <div class="error">{{ form.username.errors }}</div>
-                {% endif %}
-            </div>
+  <div class="container">
+    <h1>Register</h1>
 
-            <div class="form-group">
-                <label for="email">Email</label>
-                <input type="email" id="email" name="email" required>
-                {% if form.email.errors %}
-                    <div class="error">{{ form.email.errors }}</div>
-                {% endif %}
-            </div>
+    {% if error %}
+      <div class="error" style="margin-bottom:12px;">{{ error }}</div>
+    {% endif %}
 
-            <div class="form-group">
-                <label for="password1">Password</label>
-                <input type="password" id="password1" name="password1" required>
-                {% if form.password1.errors %}
-                    <div class="error">{{ form.password1.errors }}</div>
-                {% endif %}
-            </div>
+    <form method="POST" action="{% url 'register' %}">
+      {% csrf_token %}
 
-            <div class="form-group">
-                <label for="password2">Confirm Password</label>
-                <input type="password" id="password2" name="password2" required>
-                {% if form.password2.errors %}
-                    <div class="error">{{ form.password2.errors }}</div>
-                {% endif %}
-            </div>
+      <div class="form-group">
+        <label for="username">Username</label>
+        <input type="text" id="username" name="username" required value="{{ values.username|default:'' }}">
+      </div>
 
-            <div class="form-group">
-                <label for="address">Address</label>
-                <input type="text" id="address" name="address" required>
-                {% if form.address.errors %}
-                    <div class="error">{{ form.address.errors }}</div>
-                {% endif %}
-            </div>
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" required value="{{ values.email|default:'' }}">
+      </div>
 
-           <a href="{% url 'home' %}" ><button type="submit">Sign Up</button></a>
-        </form>
+      <div class="form-group">
+        <label for="password1">Password</label>
+        <input type="password" id="password1" name="password1" required>
+      </div>
 
-        <div class="login-link">
-            Already have an account? <a href="{% url 'login' %}">Login here</a>
-        </div>
+      <div class="form-group">
+        <label for="password2">Confirm Password</label>
+        <input type="password" id="password2" name="password2" required>
+      </div>
+
+      <div class="form-group">
+        <label for="address">Address</label>
+        <input type="text" id="address" name="address" value="{{ values.address|default:'' }}">
+      </div>
+
+      <button type="submit">Sign Up</button>
+    </form>
+
+    <div class="login-link">
+      Already have an account? <a href="{% url 'login' %}">Login here</a>
     </div>
-
-    <script>
-        function navigateHome(event) {
-            event.preventDefault(); // Prevent the default form submission
-            // Here you can add your form submission logic (e.g., AJAX)
-            // After successful submission, navigate to the home page
-            window.location.href = "{% url 'home' %}"; // Change 'home' to your actual home URL name
-        }
-    </script>
+  </div>
 </body>
 </html>

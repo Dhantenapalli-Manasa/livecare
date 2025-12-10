@@ -4,352 +4,264 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Find Specialists</title>
+
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f5f5f5;
-            padding: 20px;
-        }
-        
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f5f5f5; padding: 20px; }
+        .container { max-width: 1200px; margin: 0 auto; }
+
         header {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 30px;
-            border-radius: 8px;
-            margin-bottom: 30px;
-            text-align: center;
+            color: white; padding: 30px; border-radius: 8px;
+            margin-bottom: 30px; text-align: center;
         }
-        
-        header h1 {
-            font-size: 2.5em;
-            margin-bottom: 10px;
-        }
-        
-        .location-section {
-            background: white;
-            padding: 20px;
-            border-radius: 8px;
+        header h1 { font-size: 2.5em; margin-bottom: 10px; }
+
+        .location-section, .nearest-hospital {
+            background: white; padding: 20px; border-radius: 8px;
             margin-bottom: 30px;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
-        
         .location-section button {
-            background-color: #667eea;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 1em;
+            background-color: #667eea; color: white; border: none;
+            padding: 10px 20px; border-radius: 5px; cursor: pointer;
         }
-        
-        .location-section button:hover {
-            background-color: #764ba2;
-        }
-        
-        .nearest-hospital {
-            background: white;
-            padding: 20px;
-            border-radius: 8px;
-            margin-bottom: 30px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            border-left: 5px solid #667eea;
-        }
-        
-        .nearest-hospital h2 {
-            color: #333;
-            margin-bottom: 15px;
-        }
-        
-        .hospital-details {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-        }
-        
-        .hospital-info p {
-            margin: 8px 0;
-            color: #666;
-        }
-        
+        .location-section button:hover { background-color: #764ba2; }
+
+        .nearest-hospital { border-left: 5px solid #667eea; }
+        .nearest-hospital h2 { margin-bottom: 15px; }
+
+        .hospital-details { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+
         .specialist-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 20px;
-            margin-top: 20px;
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px; margin-top: 20px;
         }
-        
         .specialist-card {
-            background: white;
-            border-radius: 8px;
-            padding: 20px;
+            background: white; padding: 20px; border-radius: 8px;
             box-shadow: 0 2px 8px rgba(0,0,0,0.1);
             border-top: 4px solid #667eea;
-            transition: transform 0.2s;
+            transition: 0.2s;
         }
-        
-        .specialist-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-        }
-        
-        .specialist-card h3 {
-            color: #333;
-            margin-bottom: 10px;
-        }
-        
-        .specialist-type {
-            display: inline-block;
-            background: #e8f0fe;
-            color: #667eea;
-            padding: 5px 10px;
-            border-radius: 20px;
-            font-size: 0.85em;
-            margin-bottom: 10px;
-        }
-        
-        .specialist-details {
-            color: #666;
-            margin: 10px 0;
-            font-size: 0.95em;
-        }
-        
-        .timings {
-            background: #f9f9f9;
-            padding: 10px;
-            border-radius: 5px;
-            margin: 10px 0;
-        }
-        
-        .timings p {
-            margin: 5px 0;
-            color: #555;
-        }
-        
+        .specialist-card:hover { transform: translateY(-5px); }
+        .specialist-type { background: #e8f0fe; padding: 5px 10px; border-radius: 20px; color: #667eea; }
+
+        .timings { background: #f9f9f9; padding: 10px; border-radius: 5px; }
         .book-button {
-            width: 100%;
-            background-color: #667eea;
-            color: white;
-            border: none;
-            padding: 10px;
-            border-radius: 5px;
-            cursor: pointer;
-            margin-top: 15px;
-            font-weight: bold;
+            width: 100%; background-color: #667eea; color: white;
+            border: none; padding: 10px; border-radius: 5px;
+            cursor: pointer; margin-top: 15px;
         }
-        
-        .book-button:hover {
-            background-color: #764ba2;
-        }
-        
-        .loading, .error {
-            text-align: center;
-            padding: 20px;
-            border-radius: 8px;
-            margin: 20px 0;
-        }
-        
-        .loading {
-            background: #e8f0fe;
-            color: #667eea;
-        }
-        
-        .error {
-            background: #ffebee;
-            color: #c62828;
-        }
+        .book-button:hover { background-color: #764ba2; }
+
+        .loading, .error { padding: 20px; border-radius: 8px; text-align: center; }
+        .loading { background: #e8f0fe; color: #667eea; }
+        .error { background: #ffebee; color: #c62828; }
     </style>
 </head>
+
 <body>
-    <div class="container">
-        <header>
-            <h1>Find Specialists</h1>
-            <p>Locate the nearest hospital and available specialists</p>
-        </header>
-        
-        <div class="location-section">
-            <h3>Your Location</h3>
-            <p id="userLocation">Please enable location access to find nearby hospitals.</p>
-            <button onclick="getLocation()">📍 Get My Location</button>
-        </div>
-        
-        <div id="nearestHospital" class="nearest-hospital" style="display:none;">
-            <h2>🏥 Nearest Hospital</h2>
-            <div class="hospital-details">
-                <div class="hospital-info">
-                    <h3 id="hospitalName"></h3>
-                    <p><strong>Address:</strong> <span id="hospitalAddress"></span></p>
-                    <p><strong>Distance:</strong> <span id="hospitalDistance"></span></p>
-                </div>
-                <div class="hospital-info">
-                    <p><strong>Phone:</strong> <span id="hospitalPhone"></span></p>
-                    <p><strong>Email:</strong> <span id="hospitalEmail"></span></p>
-                </div>
+
+<div class="container">
+    <header>
+        <h1>Find Specialists</h1>
+        <p>Locate the nearest hospital and available specialists</p>
+    </header>
+
+    <div class="location-section">
+        <h3>Your Location</h3>
+        <p id="userLocation">Please enable location access to find nearby hospitals.</p>
+        <button onclick="getLocation()">📍 Get My Location</button>
+    </div>
+
+    <div id="nearestHospital" class="nearest-hospital" style="display:none;">
+        <h2>🏥 Nearest Hospital</h2>
+
+        <div class="hospital-details">
+            <div>
+                <h3 id="hospitalName"></h3>
+                <p><strong>Address:</strong> <span id="hospitalAddress"></span></p>
+                <p><strong>Distance:</strong> <span id="hospitalDistance"></span></p>
+            </div>
+
+            <div>
+                <p><strong>Phone:</strong> <span id="hospitalPhone"></span></p>
+                <p><strong>Email:</strong> <span id="hospitalEmail"></span></p>
             </div>
         </div>
-        
-        <div id="specialists" style="display:none;">
-            <h2 style="color:#333; margin-bottom:20px;">Available Specialists</h2>
-            <div class="specialist-grid" id="specialistList"></div>
-        </div>
-        
-        <div id="loading" class="loading" style="display:none;">
-            Loading specialists...
-        </div>
-        
-        <div id="error" class="error" style="display:none;"></div>
     </div>
-    
-    <script>
-        // Sample hospital and specialist data
-        const hospitalData = {
-            name: "City Medical Center",
-            address: "123 Healthcare Lane, Downtown",
-            phone: "+1-555-0123",
-            email: "info@citymedical.com",
-            distance: "2.5 km away"
-        };
-        
-        const specialistsData = [
-            {
-                id: 1,
-                name: "Dr. Sarah Johnson",
-                specialty: "Cardiology",
-                qualifications: "MD, Board Certified",
-                experience: "15 years",
-                timings: [
-                    { day: "Mon-Wed-Fri", time: "9:00 AM - 1:00 PM" },
-                    { day: "Tue-Thu", time: "2:00 PM - 6:00 PM" }
-                ]
-            },
-            {
-                id: 2,
-                name: "Dr. Michael Chen",
-                specialty: "Neurology",
-                qualifications: "MD, Neurologist",
-                experience: "12 years",
-                timings: [
-                    { day: "Mon-Thu", time: "10:00 AM - 4:00 PM" },
-                    { day: "Fri", time: "10:00 AM - 2:00 PM" }
-                ]
-            },
-            {
-                id: 3,
-                name: "Dr. Emily Rodriguez",
-                specialty: "Orthopedics",
-                qualifications: "MD, Orthopedic Surgeon",
-                experience: "10 years",
-                timings: [
-                    { day: "Tue-Thu-Sat", time: "8:00 AM - 12:00 PM" },
-                    { day: "Mon-Wed-Fri", time: "3:00 PM - 7:00 PM" }
-                ]
-            },
-            {
-                id: 4,
-                name: "Dr. James Wilson",
-                specialty: "Dermatology",
-                qualifications: "MD, Dermatologist",
-                experience: "8 years",
-                timings: [
-                    { day: "Mon-Sat", time: "11:00 AM - 5:00 PM" },
-                    { day: "By appointment", time: "Evening slots available" }
-                ]
-            }
-        ];
 
-        function getLocation() {
-            document.getElementById('loading').style.display = 'block';
-            
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(
-                    function(position) {
-                        const lat = position.coords.latitude;
-                        const lng = position.coords.longitude;
-                        document.getElementById('userLocation').textContent = 
-                            `📍 Location: ${lat.toFixed(4)}, ${lng.toFixed(4)}`;
-                        displayHospitalAndSpecialists();
-                    },
-                    function(error) {
-                        document.getElementById('error').textContent = 
-                            'Unable to access location. Showing default hospital.';
-                        document.getElementById('error').style.display = 'block';
-                        document.getElementById('loading').style.display = 'none';
-                        displayHospitalAndSpecialists();
-                    }
-                );
-            } else {
-                document.getElementById('error').textContent = 
-                    'Geolocation is not supported. Showing default hospital.';
-                document.getElementById('error').style.display = 'block';
-                document.getElementById('loading').style.display = 'none';
+    <div id="specialists" style="display:none;">
+        <h2>Available Specialists</h2>
+        <div id="specialistList" class="specialist-grid"></div>
+    </div>
+
+    <div id="loading" class="loading" style="display:none;">Loading specialists...</div>
+    <div id="error" class="error" style="display:none;"></div>
+
+</div>
+
+
+<script>
+
+    /* -------------------------
+       ✔ Hospital Data (fixed)
+       ------------------------- */
+
+    const hospitalData = {
+        name: "Medicover Hospitals",
+        address: "Hunter Rd, Rahmath Nagar, Hanumkonda, Telangana 506001",
+        phone: "040 6833 4455",
+        email: "medicover@gmail.com",
+        distance: "2.5 km away"
+    };
+
+    /* ----------------------------------------
+       ✔ Specialists List (fixed all errors)
+       ---------------------------------------- */
+    const specialistsData = [
+        {
+            id: 1,
+            name: "Dr. Om Prakash Prasad",
+            specialty: "Neurologist",
+            qualifications: "MBBS, MD, DM (Neurology)",
+            experience: "10 years",
+            timings: [
+                { day: "Mon-Wed-Fri", time: "9:00 AM - 1:00 PM" },
+                { day: "Tue-Thu", time: "2:00 PM - 6:00 PM" }
+            ]
+        },
+
+        {
+            id: 2,
+            name: "Dr. Ramakrishna",
+            specialty: "Neurology",
+            qualifications: "MBBS, MD, DNB (Neurology)",
+            experience: "12 years",
+            timings: [
+                { day: "Mon-Thu", time: "10:00 AM - 4:00 PM" },
+                { day: "Fri", time: "10:00 AM - 2:00 PM" }
+            ]
+        },
+
+        {
+            id: 3,
+            name: "Dr. Shafi",
+            specialty: "Cardiologist",
+            qualifications: "MBBS, MD, DM (Cardiology)",
+            experience: "10 years",
+            timings: [
+                { day: "Tue-Thu-Sat", time: "8:00 AM - 12:00 PM" },
+                { day: "Mon-Wed-Fri", time: "3:00 PM - 7:00 PM" }
+            ]
+        },
+
+        {
+            id: 4,
+            name: "Dr. N. Srinivas",
+            specialty: "General & Laparoscopic Surgeon",
+            qualifications: "MBBS, DNB (General Surgery)",
+            experience: "8 years",
+            timings: [
+                { day: "Mon-Sat", time: "11:00 AM - 5:00 PM" }
+            ]
+        },
+
+        {
+            id: 5,
+            name: "Dr. Muriki Rohini",
+            specialty: "Gastroenterologist",
+            qualifications: "MBBS, MD, DrNB (Gastroenterology)",
+            experience: "9 years",
+            timings: [
+                { day: "Mon-Sat", time: "5:00 PM - 8:00 PM" }
+            ]
+        }
+    ];
+
+    /* ------------------------------
+       ✔ Get User Location
+       ------------------------------ */
+    function getLocation() {
+        document.getElementById("loading").style.display = "block";
+
+        if (!navigator.geolocation) {
+            showError("Geolocation not supported.");
+            displayHospitalAndSpecialists();
+            return;
+        }
+
+        navigator.geolocation.getCurrentPosition(
+            (pos) => {
+                const lat = pos.coords.latitude;
+                const lon = pos.coords.longitude;
+
+                document.getElementById("userLocation").innerText =
+                    `📍 Location: ${lat.toFixed(4)}, ${lon.toFixed(4)}`;
+
+                displayHospitalAndSpecialists();
+            },
+
+            () => {
+                showError("Unable to fetch location.");
                 displayHospitalAndSpecialists();
             }
-        }
-        
-        function displayHospitalAndSpecialists() {
-            // Display nearest hospital
-            document.getElementById('hospitalName').textContent = hospitalData.name;
-            document.getElementById('hospitalAddress').textContent = hospitalData.address;
-            document.getElementById('hospitalDistance').textContent = hospitalData.distance;
-            document.getElementById('hospitalPhone').textContent = hospitalData.phone;
-            document.getElementById('hospitalEmail').textContent = hospitalData.email;
-            document.getElementById('nearestHospital').style.display = 'block';
-            
-            // Display specialists
-            const specialistList = document.getElementById('specialistList');
-            specialistList.innerHTML = '';
-            
-            specialistsData.forEach(specialist => {
-                const card = document.createElement('div');
-                card.className = 'specialist-card';
-                
-                let timingsHTML = '';
-                specialist.timings.forEach(timing => {
-                    timingsHTML += `<p>🕐 ${timing.day}: ${timing.time}</p>`;
-                });
-                
-                card.innerHTML = `
-                    <h3>${specialist.name}</h3>
-                    <span class="specialist-type">${specialist.specialty}</span>
-                    <div class="specialist-details">
-                        <p><strong>Qualifications:</strong> ${specialist.qualifications}</p>
-                        <p><strong>Experience:</strong> ${specialist.experience}</p>
-                    </div>
+        );
+    }
+
+    function showError(msg) {
+        const err = document.getElementById("error");
+        err.innerText = msg;
+        err.style.display = "block";
+        document.getElementById("loading").style.display = "none";
+    }
+
+    /* --------------------------------------
+       ✔ Display Hospital & Specialists
+       -------------------------------------- */
+    function displayHospitalAndSpecialists() {
+
+        // Hospital
+        document.getElementById("hospitalName").innerText = hospitalData.name;
+        document.getElementById("hospitalAddress").innerText = hospitalData.address;
+        document.getElementById("hospitalDistance").innerText = hospitalData.distance;
+        document.getElementById("hospitalPhone").innerText = hospitalData.phone;
+        document.getElementById("hospitalEmail").innerText = hospitalData.email;
+
+        document.getElementById("nearestHospital").style.display = "block";
+
+        // Specialists
+        const list = document.getElementById("specialistList");
+        list.innerHTML = "";
+
+        specialistsData.forEach(spec => {
+            let timingsHTML = spec.timings
+                .map(t => `<p>🕐 ${t.day}: ${t.time}</p>`)
+                .join("");
+
+            list.innerHTML += `
+                <div class="specialist-card">
+                    <h3>${spec.name}</h3>
+                    <span class="specialist-type">${spec.specialty}</span>
+
+                    <p><strong>Qualifications:</strong> ${spec.qualifications}</p>
+                    <p><strong>Experience:</strong> ${spec.experience}</p>
+
                     <div class="timings">
                         <strong>Available Timings:</strong>
                         ${timingsHTML}
                     </div>
-                    <button class="book-button" onclick="bookAppointment(${specialist.id}, '${specialist.name}')">
-                        📅 Book Appointment
-                    </button>
-                `;
-                specialistList.appendChild(card);
-            });
-            
-            document.getElementById('specialists').style.display = 'block';
-            document.getElementById('loading').style.display = 'none';
-        }
-        
-        function bookAppointment(specialistId, specialistName) {
-            alert(`Booking appointment with ${specialistName}. Redirecting to booking system...`);
-            // Add your booking logic here
-        }
-        
-        // Auto-load on page load
-        window.addEventListener('load', function() {
-            getLocation();
+
+                    <a href="{% url 'bookingappointment' %}"> <button class="book-button">📅 Book Appointment</button></a>
+                </div>
+            `;
         });
-    </script>
+
+        document.getElementById("specialists").style.display = "block";
+        document.getElementById("loading").style.display = "none";
+    }
+
+</script>
+
 </body>
 </html>

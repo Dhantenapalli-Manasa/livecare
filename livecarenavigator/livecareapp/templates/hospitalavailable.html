@@ -251,57 +251,77 @@
         const allHospitals = [
             {
                 id: 1,
-                name: "City Medical Center",
-                city: "New York",
-                lat: 40.7128,
-                lng: -74.0060,
-                phone: "+1-800-123-4567",
-                address: "123 Health Street, Medical City",
-                beds: { general: 12, icu: 3, critical: 1 },
-                doctors: 45,
+                name: "Medicover Hospitals",
+                city: "Hanumakonda",
+                Latitude: "Approximately 17.97°N(or 17°58'N)",
+                Longitude: "Approximately 79.59° E (or 79°35' E)",
+
+                phone: "040 6833 4455",
+                address: "Medicover hospital,Nexa service center,Opp:,Hunter Rd,Rahmath Nagar,Shyampet,Hanamkonda,Telangana 506001",
+                beds: { general: 25, icu: 12, critical: 5 },
+                doctors: ["neuorologist:6","orthopedic doctor:7","nursing staff:43","discharge process:8","friendly staff:41","opd staff:16","insurances:26","cleanliness:28","icu team:2"],
                 rating: 4.8,
-                services: ["Emergency", "ICU", "Surgery", "Cardiology"]
+                services: ["Emergency", "ICU", "Surgery", "Cardiology", "pharmacy services","Home Health Care","preventing Health Checkup Packages","Online Consultations"]
             },
             {
                 id: 2,
-                name: "St. Mary's Hospital",
-                city: "New York",
+                name: "Star Homeopathy",
+                city: "Warangal",
                 lat: 40.7580,
                 lng: -73.9855,
-                phone: "+1-800-987-6543",
-                address: "456 Care Avenue, Wellness Town",
-                beds: { general: 8, icu: 2, critical: 0 },
-                doctors: 38,
-                rating: 4.6,
-                services: ["Emergency", "Pediatrics", "Gynecology", "Orthopedics"]
+                phone: "07337362255",
+                address: "2nd Floor,Tirumala Mall,Main Rd,opp.Police Ground,Opposite Police Head Quarters,Kishanpura,Hanumakonda,Telangana 506001",
+                beds: { general: 0, icu: 0, critical: 0 },
+                doctors: 5,
+                rating: 4.4,
+                services: ["homeopathy services"]
             },
             {
                 id: 3,
-                name: "General Hospital",
-                city: "Brooklyn",
-                lat: 40.6782,
-                lng: -73.9442,
-                phone: "+1-800-555-0123",
-                address: "789 Recovery Road, Health District",
-                beds: { general: 20, icu: 5, critical: 2 },
-                doctors: 52,
-                rating: 4.7,
-                services: ["Emergency", "ICU", "Trauma", "Neurology"]
+                name: "MGM Hospital",
+                city: "Warangal",
+                lat: 17.990485,
+                lng: 79.592544,
+                phone: "0870-2112863",
+                address: "MGM Rd, Sherpura, Warangal, Telangana 506007, India",
+                beds:  "1450 to 1500" ,
+                doctors: 124,
+                rating: 4.9,
+                services: ["General Surgery","Gynaecology and Paediatrics","Neurosurgery","Plastic Surgery","ENT (Ear-Nose-Throat)","Cardiology"]
             },
+
+            
             {
                 id: 4,
-                name: "Queens Medical Center",
-                city: "Queens",
-                lat: 40.7282,
-                lng: -73.7949,
-                phone: "+1-800-444-5678",
-                address: "321 Wellness Blvd, Queens",
-                beds: { general: 15, icu: 4, critical: 1 },
-                doctors: 42,
-                rating: 4.5,
-                services: ["Emergency", "Maternity", "Cardiology", "Surgery"]
-            }
+                name: "General Hospital",
+                city: "Hanamkonda",
+                lat: 18.0055,
+                lng:79.5532,
+                phone: "+91 40 4567 4567",
+                address: "Beside SBI Bank, Advocates Colony, Nakkala Gutta, Hanamkonda, Warangal, Telangana 506001, India.",
+                beds: { general: 20, icu: 5, critical: 2 },
+                doctors: "2,7506",
+                rating: 4.2,
+                services: ["Emergency", "ICU", "OPD Consultation", "Physiotherapy","Diagnostics"]
+            },
+
+               {
+                id:5 ,
+                name: "Kalyani super specialty hospital",
+                city: "warangal",
+                lat: 17.9856,
+                lng:  79.5898,
+                phone: " +91 870 257 7077",
+                address: "kalyani Hospital, Bus Stand Road, Near Asian Mall, Hanamkonda, Warangal, Telangana 506001",
+                beds: "100" ,
+                doctors: 3,
+                rating: 3.9,
+                services: ["General Medicine", "Gynecology & Obstetrics", "Gynecology & Obstetrics", "General Surgery"]
+             }
+        
+            
         ];
+
         
         function calculateDistance(lat1, lng1, lat2, lng2) {
             const R = 6371; // Earth's radius in km

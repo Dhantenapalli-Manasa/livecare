@@ -159,7 +159,9 @@
             </div>
             
             <div class="button-group">
-                <button type="submit" class="btn-submit">Book Appointment</button>
+               <a href="{% url 'home'%}"> <button type="submit" class="btn-submit">Book Appointment</button></a>
+               
+            <button type="reset" class="btn-back">Clear Form</button>
                 <button type="button" class="btn-back" onclick="goToLandingPage()">Back</button>
             </div>
         </form>
@@ -180,6 +182,16 @@
                 alert('Please select a future date for the appointment');
                 return false;
             }
+            alert('Appointment booked successfully!');
+        const successDiv = document.getElementById('successMessage');
+        if (successDiv) {
+            successDiv.style.display = 'block';
+        }
+
+        // Optionally clear the form
+        document.getElementById('appointmentForm').reset();
+
+
         });
     </script>
 </body>
